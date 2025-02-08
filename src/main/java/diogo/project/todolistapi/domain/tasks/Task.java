@@ -1,5 +1,6 @@
 package diogo.project.todolistapi.domain.tasks;
 
+import diogo.project.todolistapi.domain.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -7,6 +8,13 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name = "Tasks")
 public class Task {
+
+    public Task(String description, String taskName) {
+        this.description = description;
+        this.taskName = taskName;
+    }
+
+    public Task() {}
 
 
     @Id
@@ -21,8 +29,20 @@ public class Task {
     @Column(name = "taskName", nullable = false)
     private String taskName;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     public Integer getId() {
         return taskId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setId(Integer id) {

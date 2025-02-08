@@ -1,5 +1,6 @@
 package diogo.project.todolistapi.domain.user;
 
+import diogo.project.todolistapi.domain.tasks.Task;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,11 +35,15 @@ public class User implements UserDetails {
     @Column(name = "passwordd")
     private String passwordd;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
+
     private String rolee;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
+
     @Override
     public String getPassword() {
         return passwordd;
